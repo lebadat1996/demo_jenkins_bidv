@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="BIDV_SERVICE" uuid="c030d72d-3772-411f-a987-b466c803ed7f">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@192.168.0.165:1535:orcl</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="@192.168.0.159" uuid="58fba9d1-3193-4bc6-b710-d31beb66bc83">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@192.168.0.159:1535:orcl</jdbc-url>
+    </data-source>
+  </component>
+</project>
