@@ -1,0 +1,7 @@
+step 1: running a spring boot app in docker
+
+step2: pushing to docker hub
+
+step3: configuring jenkins to be able to run docker in docker
+
+step4: building the docker spring boot api application in jenkins
