@@ -1,13 +1,10 @@
 package com.bidv.qlhdkh.service.impl;
 
 import com.bidv.qlhdkh.entity.CaseInfo;
-import com.bidv.qlhdkh.entity.CaseInfoHistory;
 import com.bidv.qlhdkh.model.CaseInfoModel;
 import com.bidv.qlhdkh.repository.CaseInfoRepositoryCustom;
 import com.bidv.qlhdkh.service.CaseInfoDetailService;
 import com.bidv.qlhdkh.util.Util;
-import com.google.common.collect.Lists;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
