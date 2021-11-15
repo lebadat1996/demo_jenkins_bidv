@@ -144,6 +144,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
             case XDTC_KHCN_HT:
                 InputStream inputStream = clazz.getResourceAsStream("/report/Form1.jrxml");
                 String nameFile1 = "Form1.jrxml";
+                log.info("report: " + nameFile1);
                 responseFile = genFile(caseInfo, inputStream, nameFile1);
                 inputStream.close();
                 break;
@@ -151,6 +152,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
             case "DNCNSK_HT":
                 InputStream inputStreams = clazz.getResourceAsStream("/report/Form8.jrxml");
                 String nameFile8 = "Form8.jrxml";
+                log.info("report: " + nameFile8);
                 responseFile = genFile(caseInfo, inputStreams, nameFile8);
                 inputStreams.close();
                 break;
@@ -158,6 +160,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
             case DN_CTLSK_HT:
                 InputStream inputStreamse = clazz.getResourceAsStream("/report/Form11.jrxml");
                 String nameFile11 = "Form11.jrxml";
+                log.info("report: " + nameFile11);
                 responseFile = genFile(caseInfo, inputStreamse, nameFile11);
                 inputStreamse.close();
                 break;
@@ -322,7 +325,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
         JRPdfExporter exporter = new JRPdfExporter();
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        File exportReportFile = File.createTempFile("output.",".pdf");
+        File exportReportFile = File.createTempFile("output.", ".pdf");
 //        File exportReportFile = new File(pathSaveFile);
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(exportReportFile));
         exporter.exportReport();

@@ -113,27 +113,27 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
+    @Transactional
     public LstDocument getListDoc(int caseId) {
         LstDocument lstDocument = new LstDocument();
         try {
-            log.info("Start find Info Document");
             List<com.bidv.qlhdkh.entity.Document> documents = documentRepository.getLstDoc(caseId);
-            for (com.bidv.qlhdkh.entity.Document document : documents) {
-                FileModel fileModel = new FileModel();
-                fileModel.setDocName(document.getDocName());
-                fileModel.setFileName(document.getFileName());
-                fileModel.setCaseId(document.getCaseId());
-                fileModel.setContentURL(document.getUrl());
-                fileModel.setObjectId(document.getObjectId());
-                fileModel.setServerName(document.getServerName());
-                fileModel.setDocId(document.getDocId());
-                fileModel.setMimeType(document.getMimeType());
-                lstDocument.addDocModelItem(fileModel);
+            if (documents.size() > 0) {
+                for (com.bidv.qlhdkh.entity.Document document : documents) {
+                    FileModel fileModel = new FileModel();
+                    fileModel.setDocName(document.getDocName());
+                    fileModel.setFileName(document.getFileName());
+                    fileModel.setCaseId(document.getCaseId());
+                    fileModel.setContentURL(document.getUrl());
+                    fileModel.setObjectId(document.getObjectId());
+                    fileModel.setServerName(document.getServerName());
+                    fileModel.setDocId(document.getDocId());
+                    fileModel.setMimeType(document.getMimeType());
+                    lstDocument.addDocModelItem(fileModel);
+                }
             }
-            log.info("End find Info Document");
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("Error find Info Document");
         }
         return lstDocument;
     }

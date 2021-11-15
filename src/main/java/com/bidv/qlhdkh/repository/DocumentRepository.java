@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
-    @Query(value = "select d from Document  d where d.caseId=:caseId")
+    @Query(value = "select d from Document  d where d.caseId = :caseId")
     List<Document> getLstDoc(int caseId);
 }

@@ -9,5 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface CaseInfoRepositoryCustom {
-    List<CaseInfoModel> getListCaseInfo(String status, String projectName, String projectCode, String startDate, String endDate, String departmentCode, String branch, String caseType, String topicCategory, String fieldType) throws ParseException;
+    List<CaseInfoModel> getListCaseInfo(String status, String projectName, String projectCode, String startDate, String endDate, String departmentCode, String branch, String caseType, String topicCategory, String fieldType,String projectType) throws ParseException;
 }

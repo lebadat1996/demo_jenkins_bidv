@@ -1,6 +1,5 @@
 package com.bidv.qlhdkh.controllers;
 
-import com.bidv.qlhdkh.entity.CaseInfo;
 import com.bidv.qlhdkh.model.CaseInfoModel;
 import com.bidv.qlhdkh.model.Response;
 import com.bidv.qlhdkh.service.CaseInfoDetailService;
@@ -22,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-14T07:52:33.572Z")
@@ -192,6 +188,17 @@ public class CaseInfoController implements CaseInfoApi {
         }
     }
 
+    @GetMapping("/api/listCaseInfo")
+    public ResponseEntity<?> listCaseInfo() {
+        try {
+            List<CaseInfoModel> caseInfoModel = caseInfoDetailService.ListCaseInfoSystem();
+            return new ResponseEntity<>(caseInfoModel, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new Response(1001, "Response", "Find Data List caseInfo Not Success", ""), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/api/validate")
     public ResponseEntity<?> validate(@RequestParam String projectCode,
                                       @RequestParam(required = false) int caseId,
@@ -242,9 +249,10 @@ public class CaseInfoController implements CaseInfoApi {
                                      @RequestParam(required = false) String bds,
                                      @RequestParam(required = false) String caseType,
                                      @RequestParam(required = false) String filedsType,
-                                     @RequestParam(required = false) String topicType) {
+                                     @RequestParam(required = false) String topicType,
+                                     @RequestParam(required = false) String projectType) {
         try {
-            List<CaseInfoModel> caseInfoList = infoCustomRepository.getListCaseInfo(status, projectName, projectcode, startDate, endDate, departmentCode, bds, caseType, topicType, filedsType);
+            List<CaseInfoModel> caseInfoList = infoCustomRepository.getListCaseInfo(status, projectName, projectcode, startDate, endDate, departmentCode, bds, caseType, topicType, filedsType,projectType);
             return new ResponseEntity<>(caseInfoList,HttpStatus.OK);
 
         } catch (Exception e) {

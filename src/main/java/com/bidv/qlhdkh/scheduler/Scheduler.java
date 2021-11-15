@@ -52,13 +52,11 @@ public class Scheduler {
         DateFormat outputformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String eDate = outputformat.format(date);
         Timestamp endDate = Timestamp.valueOf(eDate);
-        System.out.println(endDate + "E");
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DATE, -1);
         Date currentDatePlusOne = c.getTime();
         String sDate = outputformat.format(currentDatePlusOne);
         Timestamp startDate = Timestamp.valueOf(sDate);
-        System.out.println(startDate + "S");
     }
 }

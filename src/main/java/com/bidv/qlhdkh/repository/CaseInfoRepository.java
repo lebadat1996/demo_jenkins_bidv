@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CaseInfoRepository extends JpaRepository<CaseInfo, Integer> {
@@ -46,6 +47,6 @@ public interface CaseInfoRepository extends JpaRepository<CaseInfo, Integer> {
 
 
     @Query(value = "select c from CaseInfo c  where c.caseId = :caseId")
-    CaseInfo caseInfo(int caseId);
+    List<CaseInfo> caseInfo(int caseId);
 
 }

@@ -11,6 +11,11 @@ import com.bidv.qlhdkh.repository.CaseInfoRepository;
 import com.bidv.qlhdkh.service.CaseInfoDetailService;
 import com.bidv.qlhdkh.service.ListCouncillService;
 import com.bidv.qlhdkh.service.ListMemberService;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CaseInfoDetailServiceImpl implements CaseInfoDetailService {
@@ -35,9 +40,11 @@ public class CaseInfoDetailServiceImpl implements CaseInfoDetailService {
     public CaseInfoModel detailCaseInfo(Integer caseId) {
         CaseInfoModel caseInfoModelList = new CaseInfoModel();
         try {
-            CaseInfo caseInfo = caseInfoRepository.caseInfo(caseId);
-            caseInfoModelList.setLstListCouncill(councillService.getListCouncill(caseInfo.getId()));
-            getDetailCaseInfoByCaseId(caseInfoModelList, caseInfo);
+                List<CaseInfo> caseInfos = caseInfoRepository.caseInfo(caseId);
+                for (CaseInfo cases : caseInfos) {
+                    caseInfoModelList.setLstListCouncill(councillService.getListCouncill(cases.getId()));
+                    getDetailCaseInfoByCaseId(caseInfoModelList, cases);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,16 +52,38 @@ public class CaseInfoDetailServiceImpl implements CaseInfoDetailService {
     }
 
     @Override
+    @Transactional
     public CaseInfoModel detailCaseInfoSystem(Integer caseId) {
         CaseInfoModel caseInfoModelList = new CaseInfoModel();
         try {
-            CaseInfo caseInfo = caseInfoRepository.caseInfo(caseId);
-            caseInfoModelList.setLstListCouncill(councillService.getListCouncill(caseInfo.getId()));
-            getDetailCaseInfoByCaseId(caseInfoModelList, caseInfo);
+            List<CaseInfo> caseInfo = caseInfoRepository.caseInfo(caseId);
+            for (CaseInfo c : caseInfo) {
+                caseInfoModelList.setLstListCouncill(councillService.getListCouncill(c.getId()));
+                getDetailCaseInfoByCaseId(caseInfoModelList, c);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return caseInfoModelList;
+    }
+
+    @Override
+    public List<CaseInfoModel> ListCaseInfoSystem() {
+        List<CaseInfoModel> caseInfoList = new ArrayList<>();
+        try {
+            List<CaseInfo> infoList = caseInfoRepository.findAll();
+            for (CaseInfo info : infoList) {
+                if (info.getCaseId() != null) {
+                    CaseInfoModel caseInfoModel = detailCaseInfo(info.getCaseId());
+                    caseInfoList.add(caseInfoModel);
+                }
+            }
+            return caseInfoList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return caseInfoList;
     }
 
     private void getDetailCaseInfoByCaseId(CaseInfoModel caseInfoModelList, CaseInfo caseInfo) {
@@ -64,6 +93,7 @@ public class CaseInfoDetailServiceImpl implements CaseInfoDetailService {
         if (caseInfo.getProjectName() != null) {
             caseInfoModelList.setProjectName(caseInfo.getProjectName());
         }
+        caseInfoModelList.setId(caseInfo.getId());
         caseInfoModelList.setCaseType(caseInfo.getCaseType());
         caseInfoModelList.setCadresName(caseInfo.getCadresName());
         caseInfoModelList.setCadresEmail(caseInfo.getCadresEmail());
