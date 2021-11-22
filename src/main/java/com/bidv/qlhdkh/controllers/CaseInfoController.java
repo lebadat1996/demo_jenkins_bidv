@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -204,7 +205,7 @@ public class CaseInfoController implements CaseInfoApi {
                                       @RequestParam(required = false) int caseId,
                                       @RequestParam(required = false) String caseType) {
         try {
-            boolean status = caseInfoService.checkCaseInfo(projectCode, caseType,caseId);
+            boolean status = caseInfoService.checkCaseInfo(projectCode, caseType, caseId);
             if (status == true) {
                 return new ResponseEntity<>(new Response(1000, "String", "Success", "TRUE"), HttpStatus.OK);
             } else {
@@ -250,10 +251,37 @@ public class CaseInfoController implements CaseInfoApi {
                                      @RequestParam(required = false) String caseType,
                                      @RequestParam(required = false) String filedsType,
                                      @RequestParam(required = false) String topicType,
-                                     @RequestParam(required = false) String projectType) {
+                                     @RequestParam(required = false) String projectType,
+                                     @RequestParam(required = false) String userId,
+                                     @RequestParam(required = false) String councilId) {
         try {
-            List<CaseInfoModel> caseInfoList = infoCustomRepository.getListCaseInfo(status, projectName, projectcode, startDate, endDate, departmentCode, bds, caseType, topicType, filedsType,projectType);
-            return new ResponseEntity<>(caseInfoList,HttpStatus.OK);
+            List<CaseInfoModel> caseInfoList = infoCustomRepository.getListCaseInfo(status, projectName, projectcode, startDate, endDate, departmentCode, bds, caseType, topicType, filedsType, projectType, userId, councilId);
+            return new ResponseEntity<>(caseInfoList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new Response(1001, "Response", "Error Get Data CaseInfo", "Bad Request"), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/api/getListCaseInfo")
+    public ResponseEntity<?> getListCaseInfo(@RequestParam(required = false) String status,
+                                             @RequestParam(required = false) String projectName,
+                                             @RequestParam(required = false) String projectcode,
+                                             @RequestParam(required = false) String startDate,
+                                             @RequestParam(required = false) String endDate,
+                                             @RequestParam(required = false) String departmentCode,
+                                             @RequestParam(required = false) String bds,
+                                             @RequestParam(required = false) String caseType,
+                                             @RequestParam(required = false) String filedsType,
+                                             @RequestParam(required = false) String topicType,
+                                             @RequestParam(required = false) String projectType,
+                                             @RequestParam(required = false) String userId,
+                                             @RequestParam(required = false) String councilId,
+                                             @RequestParam(required = false) String title) {
+        try {
+            List<CaseInfoModel> caseInfoList = infoCustomRepository.getListCaseInfoSK(status, projectName, projectcode, startDate, endDate, departmentCode, bds, caseType, topicType, filedsType, projectType, userId, councilId,title);
+            return new ResponseEntity<>(caseInfoList, HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();

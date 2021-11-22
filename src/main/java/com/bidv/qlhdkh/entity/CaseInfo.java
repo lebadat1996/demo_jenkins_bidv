@@ -160,6 +160,8 @@ public class CaseInfo {
     private String fieldType ;
     @Column(name = "NAME_COUNCIL")
     private String nameCouncil;
+    @Column(name = "COUNCIL_ID")
+    private String councilId;
     @Column(name = "CASEFOLDER_ID")
     private String caseFolderId;
     @Column(name = "SNAPSHOT_ID")

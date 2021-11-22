@@ -3,9 +3,11 @@ package com.bidv.qlhdkh.service.impl;
 import com.bidv.qlhdkh.constants.Constants;
 import com.bidv.qlhdkh.entity.Council;
 import com.bidv.qlhdkh.entity.ListCouncill;
+import com.bidv.qlhdkh.entity.ListIniCouncil;
 import com.bidv.qlhdkh.model.*;
 import com.bidv.qlhdkh.repository.CouncilRepository;
 import com.bidv.qlhdkh.repository.ListCouncillRepository;
+import com.bidv.qlhdkh.repository.ListIniCouncilRepository;
 import com.bidv.qlhdkh.service.CouncilService;
 import com.bidv.qlhdkh.util.Util;
 import org.modelmapper.ModelMapper;
@@ -27,7 +29,7 @@ public class CouncilServiceImpl implements CouncilService {
     CouncilRepository councilRepository;
 
     @Autowired
-    ListCouncillRepository listCouncillRepository;
+    ListIniCouncilRepository listCouncillRepository;
 
     @Autowired
     Constants constants;
@@ -59,15 +61,14 @@ public class CouncilServiceImpl implements CouncilService {
                     councilModel.setCreator(council.getCreator());
                     councilModel.setModifier(council.getModifier());
                     councilModel.setCouncilName(council.getCouncilName());
-                    log.info("CouncilId" + ": " + council.getCouncilId());
-                    List<ListCouncill> councilMembers = listCouncillRepository.findAllByCouncilId(councilModel.getId());
+                    List<ListIniCouncil> councilMembers = listCouncillRepository.findAllByCouncilId(String.valueOf(councilModel.getId()));
                     log.info("Size CouncilMember" + ": " + councilMembers.size());
-                    List<ListCouncillModel> memberModels = councilMembers
+                    List<ListIniCouncilModel> memberModels = councilMembers
                             .stream()
-                            .map(user -> modelMapper.map(user, ListCouncillModel.class))
+                            .map(user -> modelMapper.map(user, ListIniCouncilModel.class))
                             .collect(Collectors.toList());
-                    LstListCouncill lstListCouncill = new LstListCouncill();
-                    lstListCouncill.setListCouncillModel(memberModels);
+                    LstListIniCouncil lstListCouncill = new LstListIniCouncil();
+                    lstListCouncill.setListIniCouncilModel(memberModels);
                     councilModel.setLstCouncilMemberModel(lstListCouncill);
                     lstCouncilModel.addCouncilModelItem(councilModel);
                 }
@@ -96,12 +97,12 @@ public class CouncilServiceImpl implements CouncilService {
                 dataCouncil.setStatus(councilModel.getStatus());
                 dataCouncil.setModifier(councilModel.getModifier());
                 councilRepository.save(dataCouncil);
-                List<ListCouncill> councilMemberList = listCouncillRepository.findAllByCouncilId(councilId);
+                List<ListIniCouncil> councilMemberList = listCouncillRepository.findAllByCouncilId(String.valueOf(councilId));
                 log.info("MemberCouncil in Database Size: " + councilMemberList.size());
                 if (councilMemberList.size() > 0) {
                     listCouncillRepository.deleteAll(councilMemberList);
-                    log.info("MemberCouncil Update Size: " + councilModel.getLstCouncilMemberModel().getListCouncillModel().size());
-                    for (ListCouncillModel councilMemberModel : councilModel.getLstCouncilMemberModel().getListCouncillModel()) {
+                    log.info("MemberCouncil Update Size: " + councilModel.getLstCouncilMemberModel().getListIniCouncilModel().size());
+                    for (ListIniCouncilModel councilMemberModel : councilModel.getLstCouncilMemberModel().getListIniCouncilModel()) {
                         createAndUpdateCouncil(councilId, councilMemberModel);
                     }
                 }
@@ -121,8 +122,8 @@ public class CouncilServiceImpl implements CouncilService {
                 council.setDateModify(Util.getDates(councilModel.getDateModify()));
                 council.setTimeActive(Util.getDates(councilModel.getTimeActive()));
                 councilRepository.save(council);
-                log.info("Size model CouncilMemberModel: " + councilModel.getLstCouncilMemberModel().getListCouncillModel().size());
-                for (ListCouncillModel councilMemberModel : councilModel.getLstCouncilMemberModel().getListCouncillModel()) {
+                log.info("Size model CouncilMemberModel: " + councilModel.getLstCouncilMemberModel().getListIniCouncilModel().size());
+                for (ListIniCouncilModel councilMemberModel : councilModel.getLstCouncilMemberModel().getListIniCouncilModel()) {
                     createAndUpdateCouncil(council.getId(), councilMemberModel);
                 }
                 log.info("Create Council and MemberCouncil Success !!");
@@ -134,9 +135,9 @@ public class CouncilServiceImpl implements CouncilService {
         }
     }
 
-    private void createAndUpdateCouncil(int councilId, ListCouncillModel councilMemberModel) throws ParseException {
-        ListCouncill councilMember = new ListCouncill();
-        councilMember.setCouncilId(councilId);
+    private void createAndUpdateCouncil(int councilId, ListIniCouncilModel councilMemberModel) throws ParseException {
+        ListIniCouncil councilMember = new ListIniCouncil();
+        councilMember.setCouncilId(String.valueOf(councilId));
         councilMember.setUserName(councilMemberModel.getUserName());
         councilMember.setUserId(councilMemberModel.getUserId());
         councilMember.setFullName(councilMemberModel.getFullName());
@@ -152,6 +153,8 @@ public class CouncilServiceImpl implements CouncilService {
         councilMember.setBrnLevel(councilMemberModel.getBrnLevel());
         councilMember.setGroupXl(councilMemberModel.getGroupXL());
         councilMember.setConfirm(councilMemberModel.getConfirm());
+        councilMember.setAverage(councilMemberModel.getAverage());
+        councilMember.setConclusion(councilMemberModel.getConclusion());
         councilMember.setQualification(councilMemberModel.getQualification());
         councilMember.setContributePercent(councilMemberModel.getContributePercent());
         councilMember.setDateOfBirth(Util.getDates(councilMemberModel.getDateofBirth()));
@@ -160,23 +163,24 @@ public class CouncilServiceImpl implements CouncilService {
 
 
     @Override
-    public CouncilModel getInfoCouncil(int councilId) {
+    public CouncilModel getInfoCouncil(String councilId) {
         CouncilModel councilModel = new CouncilModel();
         try {
             log.info("Start get info council by CouncilId");
-            log.info("CouncilId: " + councilId);
-            Optional<Council> council = councilRepository.getCouncil(councilId);
+            log.info("councilId: " + councilId);
+            Optional<Council> council = councilRepository.getCouncilByCouncilId(Integer.parseInt(councilId));
             ModelMapper modelMapper = new ModelMapper();
-            List<ListCouncill> councilMembers = listCouncillRepository.findAllByCouncilId(councilId);
-            log.info("Size CouncilMembers: " + councilMembers.size());
-            List<ListCouncillModel> memberModels = councilMembers
-                    .stream()
-                    .map(user -> modelMapper.map(user, ListCouncillModel.class))
-                    .collect(Collectors.toList());
-            LstListCouncill lstCouncilMemberModel = new LstListCouncill();
-            lstCouncilMemberModel.setListCouncillModel(memberModels);
             if (council.isPresent()) {
+                List<ListIniCouncil> councilMembers = listCouncillRepository.findAllByCouncilId(String.valueOf(council.get().getId()));
+                log.info("Size CouncilMembers: " + councilMembers.size());
+                List<ListIniCouncilModel> memberModels = councilMembers
+                        .stream()
+                        .map(user -> modelMapper.map(user, ListIniCouncilModel.class))
+                        .collect(Collectors.toList());
+                LstListIniCouncil lstCouncilMemberModel = new LstListIniCouncil();
+                lstCouncilMemberModel.setListIniCouncilModel(memberModels);
                 Council councilData = council.get();
+                councilModel.setId(councilData.getId());
                 councilModel.setCouncilId(councilData.getCouncilId());
                 councilModel.setCreator(councilData.getCreator());
                 councilModel.setCouncilName(councilData.getCouncilName());
@@ -191,8 +195,9 @@ public class CouncilServiceImpl implements CouncilService {
                 councilModel.setStatus(councilData.getStatus());
                 councilModel.setSubject(councilData.getSubject());
                 councilModel.setTimeActive(Util.convertDateToString(councilData.getTimeActive()));
+                councilModel.setLstCouncilMemberModel(lstCouncilMemberModel);
             }
-            councilModel.setLstCouncilMemberModel(lstCouncilMemberModel);
+
             log.info("Get Info Council and Info List Member in Council");
             log.info("End");
             return councilModel;
@@ -211,7 +216,7 @@ public class CouncilServiceImpl implements CouncilService {
             Optional<Council> council = councilRepository.getCouncil(councilId);
             if (council.isPresent()) {
                 councilRepository.delete(council.get());
-                List<ListCouncill> councilMembers = listCouncillRepository.findAllByCouncilId(councilId);
+                List<ListIniCouncil> councilMembers = listCouncillRepository.findAllByCouncilId(String.valueOf(councilId));
                 listCouncillRepository.deleteAll(councilMembers);
                 log.info("Remove Council Success");
                 return 0;

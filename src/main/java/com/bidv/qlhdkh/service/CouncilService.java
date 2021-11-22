@@ -13,7 +13,7 @@ public interface CouncilService {
 
     void createCouncil(CouncilModel councilModel);
 
-    CouncilModel getInfoCouncil(int councilId);
+    CouncilModel getInfoCouncil(String councilId);
 
     int deleteCouncil(int councilId);
 

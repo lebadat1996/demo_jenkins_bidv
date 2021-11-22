@@ -160,6 +160,10 @@ public class CaseInfoDetailServiceImpl implements CaseInfoDetailService {
         caseInfoModelList.setCaseId(caseInfo.getCaseId());
         caseInfoModelList.setCra(caseInfo.getCra());
         caseInfoModelList.setStepId(caseInfo.getStepId());
+        caseInfoModelList.setNameCouncil(caseInfo.getNameCouncil());
+        caseInfoModelList.setCouncilId(caseInfo.getCouncilId());
+        caseInfoModelList.setSnapshotId(caseInfo.getSnapshotId());
+        caseInfoModelList.setCaseFolderId(caseInfo.getCaseFolderId());
         caseInfoModelList.setAcceptDate(convertDateToString(caseInfo.getAcceptDate()));
         caseInfoModelList.setStatusRemuneration(caseInfo.getStatusRemuneration());
         caseInfoModelList.setRecognitionDate(convertDateToString(caseInfo.getRecognitionDate()));

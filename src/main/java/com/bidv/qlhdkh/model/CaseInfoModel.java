@@ -189,6 +189,9 @@ public class CaseInfoModel {
     @JsonProperty("Background")
     private String background = null;
 
+    @JsonProperty("councilId")
+    private String councilId = null;
+
     @JsonProperty("Share")
     private String share = null;
 
@@ -2517,6 +2520,25 @@ public class CaseInfoModel {
     public void setLstAcceptTranscript(LstAcceptTranscript lstAcceptTranscript) {
         this.lstAcceptTranscript = lstAcceptTranscript;
     }
+    public CaseInfoModel councilId(String councilId) {
+        this.councilId = councilId;
+        return this;
+    }
+
+    /**
+     * Get councilId
+     * @return councilId
+     **/
+    @ApiModelProperty(value = "")
+
+
+    public String getCouncilId() {
+        return councilId;
+    }
+
+    public void setCouncilId(String councilId) {
+        this.councilId = councilId;
+    }
 
     public CaseInfoModel snapshotId(String snapshotId) {
         this.snapshotId = snapshotId;
@@ -2638,6 +2660,7 @@ public class CaseInfoModel {
                 Objects.equals(this.nameCouncil, caseInfoModel.nameCouncil) &&
                 Objects.equals(this.caseFolderId, caseInfoModel.caseFolderId) &&
                 Objects.equals(this.snapshotId, caseInfoModel.snapshotId) &&
+                Objects.equals(this.councilId, caseInfoModel.councilId) &&
                 Objects.equals(this.lstHistories, caseInfoModel.lstHistories) &&
                 Objects.equals(this.lstEvaluateTranscript, caseInfoModel.lstEvaluateTranscript) &&
                 Objects.equals(this.lstDutyStatus, caseInfoModel.lstDutyStatus) &&
@@ -2656,7 +2679,7 @@ public class CaseInfoModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, caseType, projectName, projectCode,  cadresName, cadresEmail, quantity, cadresPhone, registerCondition, cost, startDate, endDate, necessity, target, range, object, method, data, content, consequence, contribute, weakness, tranferMethod, action, projectType, topicType, dutyOwner, dutySecretary, createdDate, projectLevel, topicCategory, evaluateBudget, presidentConclusion, recommentBudget, requestPerfect, researchOverView, researchMethod, researchResult, orientation, reference, extensionDate, contractNo, accomanyDoc, note, budgetPercent, reportRange, reportEffective, reportDifficult, preStatusSol, processApp, effecSol, interestSub, conclusion, interest, remuneration, calInterestMethod, background, share, planPlus, suggest, status, caseId, bds, cra, brn, branch, deparmentCode, department, acceptDate, recognitionDate, statusRemuneration, stepId, fieldType, nameCouncil, caseFolderId, snapshotId, lstReTranscript, lstResultUntillChange, lstPlanPlusTable, lstPlan, lstParty, lstListSolDepartment, lstListMember, lstListIniCouncil, lstListEmployee, lstListCouncill, lstListAuthor, lstListAcceprtCouncil, lstInitiativeTranScript, lstInitiativeStatus, lstHost, lstHistories, lstEvaluateTranscript, lstDutyStatus, lstEvaluateInitiative, lstEvaluateDuty, lstEstimateBudget, lstDutyPayment, lstContentStop, lstContentChange, lstCoHost, lstCadresInfor, lstAcceptTranscript, lstDocument);
+        return Objects.hash(id, caseType, projectName, projectCode,  cadresName, cadresEmail, quantity, cadresPhone, registerCondition, cost, startDate, endDate, necessity, target, range, object, method, data, content, consequence, contribute, weakness, tranferMethod, action, projectType, topicType, dutyOwner, dutySecretary, createdDate, projectLevel, topicCategory, evaluateBudget, presidentConclusion, recommentBudget, requestPerfect, researchOverView, researchMethod, researchResult, orientation, reference, extensionDate, contractNo, accomanyDoc, note, budgetPercent, reportRange, reportEffective, reportDifficult, preStatusSol, processApp, effecSol, interestSub, conclusion, interest, remuneration, calInterestMethod, background, share, planPlus, suggest, status, caseId, bds, cra, brn, branch, deparmentCode, department, acceptDate, recognitionDate, statusRemuneration, stepId, fieldType, nameCouncil, caseFolderId, snapshotId,councilId, lstReTranscript, lstResultUntillChange, lstPlanPlusTable, lstPlan, lstParty, lstListSolDepartment, lstListMember, lstListIniCouncil, lstListEmployee, lstListCouncill, lstListAuthor, lstListAcceprtCouncil, lstInitiativeTranScript, lstInitiativeStatus, lstHost, lstHistories, lstEvaluateTranscript, lstDutyStatus, lstEvaluateInitiative, lstEvaluateDuty, lstEstimateBudget, lstDutyPayment, lstContentStop, lstContentChange, lstCoHost, lstCadresInfor, lstAcceptTranscript, lstDocument);
     }
 
     @Override
@@ -2740,6 +2763,7 @@ public class CaseInfoModel {
         sb.append("    nameCouncil: ").append(toIndentedString(nameCouncil)).append("\n");
         sb.append("    caseFolderId: ").append(toIndentedString(caseFolderId)).append("\n");
         sb.append("    snapshotId: ").append(toIndentedString(snapshotId)).append("\n");
+        sb.append("    councilId: ").append(toIndentedString(councilId)).append("\n");
         sb.append("    lstReTranscript: ").append(toIndentedString(lstReTranscript)).append("\n");
         sb.append("    lstResultUntillChange: ").append(toIndentedString(lstResultUntillChange)).append("\n");
         sb.append("    lstPlanPlusTable: ").append(toIndentedString(lstPlanPlusTable)).append("\n");

@@ -77,7 +77,8 @@ public class Constants {
     String pathUpload;
     @Value("${com.bidv.link.cookie}")
     String linkCookie;
-
+    public static final String ROLE_TK = "Thư ký";
+    public static final String ROLE_CTHD = "Chủ tịch Hội đồng";
     public static final String RESPONSE_ERROR_EMAIL = "Error Send Mail Success";
     public static final String RESPONSE_EMAIL = "Send Mail Success";
     public static final String TYPE = "String";

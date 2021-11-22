@@ -46,7 +46,7 @@ public class CouncilModel {
     private String councilName = null;
 
     @JsonProperty("LstCouncilMemberModel")
-    private LstListCouncill lstCouncilMemberModel = null;
+    private LstListIniCouncil lstCouncilMemberModel = null;
 
     public CouncilModel id(Integer id) {
         this.id = id;
@@ -248,7 +248,7 @@ public class CouncilModel {
         this.councilName = councilName;
     }
 
-    public CouncilModel lstCouncilMemberModel(LstListCouncill lstCouncilMemberModel) {
+    public CouncilModel lstCouncilMemberModel(LstListIniCouncil lstCouncilMemberModel) {
         this.lstCouncilMemberModel = lstCouncilMemberModel;
         return this;
     }
@@ -261,13 +261,14 @@ public class CouncilModel {
 
     @Valid
 
-    public LstListCouncill getLstCouncilMemberModel() {
+    public LstListIniCouncil getLstCouncilMemberModel() {
         return lstCouncilMemberModel;
     }
 
-    public void setLstCouncilMemberModel(LstListCouncill lstCouncilMemberModel) {
+    public void setLstCouncilMemberModel(LstListIniCouncil lstCouncilMemberModel) {
         this.lstCouncilMemberModel = lstCouncilMemberModel;
     }
+
 
 
     @Override
@@ -289,8 +290,7 @@ public class CouncilModel {
                 Objects.equals(this.timeActive, councilModel.timeActive) &&
                 Objects.equals(this.status, councilModel.status) &&
                 Objects.equals(this.councilName, councilModel.councilName) &&
-                Objects.equals(this.lstCouncilMemberModel, councilModel.lstCouncilMemberModel);
-    }
+                Objects.equals(this.lstCouncilMemberModel, councilModel.lstCouncilMemberModel);    }
 
     @Override
     public int hashCode() {
@@ -312,8 +312,7 @@ public class CouncilModel {
         sb.append("    timeActive: ").append(toIndentedString(timeActive)).append("\n");
         sb.append("    status: ").append(toIndentedString(status)).append("\n");
         sb.append("    councilName: ").append(toIndentedString(councilName)).append("\n");
-        sb.append("    lstCouncilMemberModel: ").append(toIndentedString(lstCouncilMemberModel)).append("\n");
-        sb.append("}");
+        sb.append("    lstCouncilMemberModel: ").append(toIndentedString(lstCouncilMemberModel)).append("\n");        sb.append("}");
         return sb.toString();
     }
 

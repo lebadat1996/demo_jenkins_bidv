@@ -49,6 +49,12 @@ public class ListIniCouncil {
     String qualification;
     @Column(name = "CONTRIBUTEPERCENT")
     String contributePercent;
+    @Column(name = "COUNCIL_ID")
+    String councilId;
+    @Column(name = "AVERAGE")
+    Float average;
+    @Column(name = "CONCLUSION")
+    String conclusion;
     @Column(name = "DATEOFBIRTH")
     Date dateOfBirth;
 }

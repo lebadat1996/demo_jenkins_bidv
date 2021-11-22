@@ -15,4 +15,6 @@ public interface CouncilRepository extends JpaRepository<Council, Integer> {
     @Query(value = "select  c from Council  c where c.Id = :id")
     Optional<Council> getCouncil(int id);
 
+    @Query(value = "select  c from Council  c where c.Id = :councilId")
+    Optional<Council> getCouncilByCouncilId(int councilId);
 }

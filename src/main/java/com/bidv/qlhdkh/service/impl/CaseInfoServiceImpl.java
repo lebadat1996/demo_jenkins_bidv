@@ -33,6 +33,8 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.bidv.qlhdkh.entity.ListIniCouncil;
+import com.bidv.qlhdkh.repository.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +47,6 @@ import com.bidv.qlhdkh.constants.Constants;
 import com.bidv.qlhdkh.entity.CaseInfo;
 import com.bidv.qlhdkh.entity.CaseInfoHistory;
 import com.bidv.qlhdkh.model.CaseInfoModel;
-import com.bidv.qlhdkh.repository.CaseInfoHistoryRepository;
-import com.bidv.qlhdkh.repository.CaseInfoRepository;
-import com.bidv.qlhdkh.repository.ListMemberHistoryRepository;
-import com.bidv.qlhdkh.repository.ListMemberRepository;
 import com.bidv.qlhdkh.service.AcceptTranscriptService;
 import com.bidv.qlhdkh.service.CaseInfoService;
 import com.bidv.qlhdkh.service.CoHostService;
@@ -71,7 +69,8 @@ public class CaseInfoServiceImpl implements CaseInfoService {
 
     @Autowired
     Constants constants;
-
+    @Autowired
+    ListIniCouncilRepository listIniCouncilRepository;
     @Autowired
     ListMemberRepository memberRepository;
     @Autowired
@@ -624,6 +623,8 @@ public class CaseInfoServiceImpl implements CaseInfoService {
             List<CaseInfo> cases = caseInfoRepository.findAllByCaseId(caseinfo.getCaseId());
             if (cases.size() > 0) {
                 for (CaseInfo caseInf : cases) {
+                    caseInf.setCouncilId(caseinfo.getCouncilId());
+                    caseInf.setNameCouncil(caseinfo.getNameCouncil());
                     caseInf.setProjectName(caseinfo.getProjectName());
                     caseInf.setProjectCode(caseinfo.getProjectCode());
                     caseInf.setCadresName(caseinfo.getCadresName());
@@ -698,9 +699,18 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                     caseInf.setCaseFolderId(caseinfo.getCaseFolderId());
                     caseInf.setSnapshotId(caseinfo.getSnapshotId());
                     caseInfoRepository.save(caseInf);
+                    if (!Util.isNullOrEmpty(caseInf.getCouncilId())) {
+                        List<ListIniCouncil> listIniCouncil = listIniCouncilRepository.findAllByCouncilId(caseInf.getCouncilId());
+                        for (ListIniCouncil lstC : listIniCouncil) {
+                            lstC.setCaseId(caseInf.getCaseId());
+                            listIniCouncilRepository.save(lstC);
+                        }
+                    }
                     return caseInf.getId();
                 }
             } else {
+                caseinfos.setCouncilId(caseinfo.getCouncilId());
+                caseinfos.setNameCouncil(caseinfo.getNameCouncil());
                 caseinfos.setProjectName(caseinfo.getProjectName());
                 caseinfos.setProjectCode(caseinfo.getProjectCode());
                 caseinfos.setCaseType(caseinfo.getCaseType());
@@ -773,7 +783,6 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                 caseinfos.setRecognitionDate(getDates(caseinfo.getRecognitionDate()));
                 caseinfos.setStepId(caseinfo.getStepId());
                 caseinfos.setFieldType(caseinfo.getFieldType());
-                caseinfos.setNameCouncil(caseinfo.getNameCouncil());
                 caseinfos.setCaseFolderId(caseinfo.getCaseFolderId());
                 caseinfos.setSnapshotId(caseinfo.getSnapshotId());
                 caseInfoRepository.save(caseinfos);
@@ -818,6 +827,7 @@ public class CaseInfoServiceImpl implements CaseInfoService {
         CaseInfoHistory caseInfoHistory = new CaseInfoHistory();
         try {
             log.info("Start API saveCaseHistory  INFO New");
+            caseInfoHistory.setCouncilId(caseinfo.getCouncilId());
             caseInfoHistory.setCaseType(caseinfo.getCaseType());
             caseInfoHistory.setProjectName(caseinfo.getProjectName());
             caseInfoHistory.setProjectCode(caseinfo.getProjectCode());
@@ -911,6 +921,8 @@ public class CaseInfoServiceImpl implements CaseInfoService {
             if (!caseinfo.getCaseType().equals(DN_CTLSK_HT) && !caseinfo.getCaseType().equals(DN_CTLSK_CS)) {
                 caseInfoHistory.setStatus(caseinfo.getStatus());
             }
+            caseInfoHistory.setCouncilId(caseinfo.getCouncilId());
+            caseInfoHistory.setNameCouncil(caseinfo.getNameCouncil());
             caseInfoHistory.setStepId(caseinfo.getStepId());
             caseInfoHistory.setStartDate(Util.getDates(caseinfo.getStartDate()));
             caseInfoHistory.setEndDate(Util.getDates(caseinfo.getEndDate()));

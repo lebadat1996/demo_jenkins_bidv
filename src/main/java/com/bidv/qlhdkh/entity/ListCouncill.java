@@ -16,7 +16,7 @@ public class ListCouncill {
     @Column(name = "CASEID")
     Integer caseId;
     @Column(name = "COUNCIL_ID")
-    Integer councilId;
+    String councilId;
     @Column(name = "USERID")
     String userId;
     @Column(name = "FULLNAME")

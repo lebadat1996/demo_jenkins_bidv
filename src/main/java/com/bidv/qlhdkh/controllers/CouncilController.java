@@ -45,7 +45,7 @@ public class CouncilController {
     }
 
     @GetMapping("/api/getInfoCouncil")
-    public ResponseEntity<?> getInfoCouncil(@RequestParam int councilId) {
+    public ResponseEntity<?> getInfoCouncil(@RequestParam String councilId) {
         try {
             CouncilModel council = councilService.getInfoCouncil(councilId);
             return new ResponseEntity<>(council, HttpStatus.OK);

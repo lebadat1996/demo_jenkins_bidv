@@ -11,4 +11,10 @@ import java.util.List;
 public interface ListIniCouncilRepository extends JpaRepository<ListIniCouncil, Integer> {
     @Query("select l from ListIniCouncil  l where l.caseId=:caseId")
     List<ListIniCouncil> findAllByCaseId(int caseId);
+
+    @Query("select l from ListIniCouncil  l where l.councilId like %:councilId% ")
+    List<ListIniCouncil> findAllByCouncilId(String councilId);
+
+    @Query("select l from ListIniCouncil  l where l.jobTitle like %:jobTitle% ")
+    List<ListIniCouncil> findAllByJobTitles(String jobTitle);
 }

@@ -117,6 +117,8 @@ public class ListCouncillServiceImpl implements ListCouncillService {
             listinicouncils.setBrnLevel(iniCouncil.getBrnLevel());
             listinicouncils.setGroupXL(iniCouncil.getGroupXl());
             listinicouncils.setConfirm(iniCouncil.getConfirm());
+            listinicouncils.setAverage(iniCouncil.getAverage());
+            listinicouncils.setConclusion(iniCouncil.getConclusion());
             listinicouncils.setQualification(iniCouncil.getQualification());
             listinicouncils.setContributePercent(iniCouncil.getContributePercent());
             listinicouncils.setDateofBirth(Util.convertDateToString(iniCouncil.getDateOfBirth()));
