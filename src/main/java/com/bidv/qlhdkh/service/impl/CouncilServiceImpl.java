@@ -62,7 +62,6 @@ public class CouncilServiceImpl implements CouncilService {
                     councilModel.setModifier(council.getModifier());
                     councilModel.setCouncilName(council.getCouncilName());
                     List<ListIniCouncil> councilMembers = listCouncillRepository.findAllByCouncilId(String.valueOf(councilModel.getId()));
-                    log.info("Size CouncilMember" + ": " + councilMembers.size());
                     List<ListIniCouncilModel> memberModels = councilMembers
                             .stream()
                             .map(user -> modelMapper.map(user, ListIniCouncilModel.class))

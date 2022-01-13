@@ -297,11 +297,11 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                 Date endDates = getDates(endDate);
                 for (String s : statuss) {
                     List<CaseInfo> caseInfos = caseInfoRepository.searchCase(s, projectName, projectcode, startDates, endDates, departmentCode, branch, caseType, pageable);
-                    List<CaseInfo> unique = caseInfos.stream()
-                            .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getId))),
-                                    ArrayList::new));
+//                    List<CaseInfo> unique = caseInfos.stream()
+//                            .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getCaseId))),
+//                                    ArrayList::new));
                     ModelMapper modelMapper = new ModelMapper();
-                    for (CaseInfo caseInfo1 : unique) {
+                    for (CaseInfo caseInfo1 : caseInfos) {
                         svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
                     }
                 }
@@ -309,11 +309,11 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                 Date startDates = getDates(startDate);
                 Date endDates = getDates(endDate);
                 List<CaseInfo> caseInfos = caseInfoRepository.searchCase(null, projectName, projectcode, startDates, endDates, departmentCode, branch, caseType, pageable);
-                List<CaseInfo> unique = caseInfos.stream()
-                        .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getId))),
-                                ArrayList::new));
+//                List<CaseInfo> unique = caseInfos.stream()
+//                        .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getCaseId))),
+//                                ArrayList::new));
                 ModelMapper modelMapper = new ModelMapper();
-                for (CaseInfo caseInfo1 : unique) {
+                for (CaseInfo caseInfo1 : caseInfos) {
                     svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
                 }
             }

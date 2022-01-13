@@ -22,7 +22,7 @@ public interface CaseInfoRepository extends JpaRepository<CaseInfo, Integer> {
             " (:startDate is null or c.CreatedDate >= :startDate)  and  (:endDate is null or c.CreatedDate <= :endDate) and" +
             " (:departmentCode is null or c.DeparmentCode like %:departmentCode%) and " +
             "(:branch is null or  c.Bds = :branch) and " +
-            "(:caseType is null or  c.CaseType = :caseType)")
+            "(:caseType is null or  c.CaseType = :caseType)  order by c.caseId desc")
     List<CaseInfo> searchCase(String status, String projectName, String projectcode, Date startDate, Date endDate, String departmentCode, String branch, String caseType, Pageable pageable);
 
 

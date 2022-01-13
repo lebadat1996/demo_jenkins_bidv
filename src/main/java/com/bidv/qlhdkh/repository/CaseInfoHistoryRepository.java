@@ -25,7 +25,7 @@ public interface CaseInfoHistoryRepository extends JpaRepository<CaseInfoHistory
             " ((:startDate is null or c.StartDate >= :startDate) and (:endDate is null or c.EndDate <= :endDate)) and" +
             " (:departmentCode is null or c.DeparmentCode = :departmentCode) and " +
             "(:branch is null or  c.Branch = :branch) and " +
-            "(:caseType is null or  c.CaseType like %:caseType%) and (L.userId like %:userId%)")
+            "(:caseType is null or  c.CaseType like %:caseType%) and (L.userId like %:userId%) ")
     List<CaseInfoHistory> searchCase(String status, String projectName, String projectcode, Date startDate, Date endDate, String departmentCode, String branch, String caseType, String userId);
 
     @Query("select c from CaseInfoHistory  c where c.caseId =:caseId")

@@ -73,114 +73,6 @@ public class CaseInfoCustomRepositoryImpl implements CaseInfoRepositoryCustom {
         }
     }
 
-    private List<CaseInfoModel> getCaseInfoModels(String status, String projectName, String projectCode, String startDate, String endDate, String departmentCode, String branch, String caseType, String topicCategory, String fieldType, String projectType, String councilId, List<CaseInfoModel> svCaseInfo) throws ParseException {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("FROM  CaseInfo c ");
-        stringBuilder.append("where 1 = 1 ");
-        if (!Util.isNullOrEmpty(status)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("c.Status IN (:status) ");
-        }
-        if (!Util.isNullOrEmpty(projectName)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.ProjectName) like lower(concat('%', :projectName,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(projectCode)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.ProjectCode) like lower(concat('%', :projectCode,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(departmentCode)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.DeparmentCode) like lower(concat('%', :departmentCode,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(branch)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.Bds) like lower(concat('%', :branch,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(caseType)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.CaseType) like lower(concat('%', :caseType,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(topicCategory)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.TopicCategory) like lower(concat('%', :topicCategory,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(fieldType)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.fieldType) like lower(concat('%', :fieldType,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(projectType)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.ProjectType) like lower(concat('%', :projectType,'%')) ");
-        }
-        if (!Util.isNullOrEmpty(startDate)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("c.CreatedDate >= :startDate ");
-        }
-        if (!Util.isNullOrEmpty(endDate)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("c.CreatedDate <= :endDate ");
-        }
-        if (!Util.isNullOrEmpty(councilId)) {
-            stringBuilder.append("and ");
-            stringBuilder.append("lower(c.councilId) like lower(concat('%', :councilId,'%')) ");
-        }
-        String sql = stringBuilder.toString();
-        log.info("SQL: " + sql);
-        Query query = entityManager.createQuery(sql);
-        if (!Util.isNullOrEmpty(status)) {
-            String[] st = status.split(",", 50);
-            List<String> listStatus = Arrays.asList(st);
-            log.info(listStatus.toString());
-            query.setParameter("status", listStatus);
-        }
-        if (!Util.isNullOrEmpty(projectName)) {
-            query.setParameter("projectName", projectName);
-        }
-        if (!Util.isNullOrEmpty(projectCode)) {
-            query.setParameter("projectCode", projectCode);
-        }
-        if (!Util.isNullOrEmpty(departmentCode)) {
-            query.setParameter("departmentCode", departmentCode);
-        }
-        if (!Util.isNullOrEmpty(branch)) {
-            query.setParameter("branch", branch);
-        }
-        if (!Util.isNullOrEmpty(caseType)) {
-            query.setParameter("caseType", caseType);
-        }
-        if (!Util.isNullOrEmpty(topicCategory)) {
-            query.setParameter("topicCategory", topicCategory);
-        }
-        if (!Util.isNullOrEmpty(fieldType)) {
-            query.setParameter("fieldType", fieldType);
-        }
-        if (!Util.isNullOrEmpty(projectType)) {
-            query.setParameter("projectType", projectType);
-        }
-        if (!Util.isNullOrEmpty(startDate)) {
-            Date stDate = Util.getDates(startDate);
-            query.setParameter("startDate", stDate);
-        }
-        if (!Util.isNullOrEmpty(endDate)) {
-            Date eDate = Util.getDates(endDate);
-            query.setParameter("endDate", eDate);
-        }
-        if (!Util.isNullOrEmpty(councilId)) {
-            query.setParameter("councilId", councilId);
-        }
-        List<CaseInfo> caseInfos = query.getResultList();
-        List<CaseInfo> unique = caseInfos.stream()
-                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getId))),
-                        ArrayList::new));
-        for (CaseInfo caseInfo1 : unique) {
-            CaseInfoModel caseInfo = caseInfoDetailService.detailCaseInfo(caseInfo1.getCaseId());
-            svCaseInfo.add(caseInfo);
-        }
-        log.info("SIZE CASE: " + svCaseInfo.size());
-        log.info("End Service Get Data CaseIno In System");
-        return svCaseInfo;
-    }
 
     private List<CaseInfoModel> caseInfoModels(String status, String projectName, String projectCode, String startDate, String endDate, String departmentCode, String branch, String caseType, String topicCategory, String fieldType, String projectType, List<CaseInfoModel> svCaseInfo) throws ParseException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -230,7 +122,7 @@ public class CaseInfoCustomRepositoryImpl implements CaseInfoRepositoryCustom {
             stringBuilder.append("and ");
             stringBuilder.append("c.CreatedDate <= :endDate ");
         }
-
+        stringBuilder.append("order by c.caseId desc ");
         String sql = stringBuilder.toString();
         log.info("SQL: " + sql);
         Query query = entityManager.createQuery(sql);
@@ -273,9 +165,9 @@ public class CaseInfoCustomRepositoryImpl implements CaseInfoRepositoryCustom {
         }
         List<CaseInfo> caseInfos = query.getResultList();
         List<CaseInfo> unique = caseInfos.stream()
-                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getId))),
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getCaseId))),
                         ArrayList::new));
-        for (CaseInfo caseInfo1 : unique) {
+        for (CaseInfo caseInfo1 : caseInfos) {
             CaseInfoModel caseInfo = caseInfoDetailService.detailCaseInfo(caseInfo1.getCaseId());
             svCaseInfo.add(caseInfo);
         }
@@ -345,7 +237,7 @@ public class CaseInfoCustomRepositoryImpl implements CaseInfoRepositoryCustom {
             stringBuilder.append("and ");
             stringBuilder.append("c.CreatedDate <= :endDate ");
         }
-
+        stringBuilder.append("order by c.caseId desc ");
         String sql = stringBuilder.toString();
         log.info("SQL: " + sql);
         Query query = entityManager.createQuery(sql);
@@ -402,8 +294,9 @@ public class CaseInfoCustomRepositoryImpl implements CaseInfoRepositoryCustom {
             listCaseInfo.add(caseInfo);
         }
         List<CaseInfo> unique = listCaseInfo.stream()
-                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getId))),
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(CaseInfo::getCaseId))),
                         ArrayList::new));
+        Collections.reverse(unique);
         for (CaseInfo caseInfo1 : unique) {
             CaseInfoModel caseInfo = caseInfoDetailService.detailCaseInfo(caseInfo1.getCaseId());
             svCaseInfo.add(caseInfo);

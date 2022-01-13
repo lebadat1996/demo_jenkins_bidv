@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class ListMemberHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     Integer id;
     @Column(name = "CASEID")

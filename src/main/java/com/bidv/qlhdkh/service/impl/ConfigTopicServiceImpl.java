@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bidv.qlhdkh.model.*;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bidv.qlhdkh.constants.Constants;
 import com.bidv.qlhdkh.entity.Department;
-import com.bidv.qlhdkh.model.CadresInforModel;
-import com.bidv.qlhdkh.model.CaseInfoModel;
-import com.bidv.qlhdkh.model.CoHostModel;
-import com.bidv.qlhdkh.model.ConfigTopic;
-import com.bidv.qlhdkh.model.ListMemberModel;
-import com.bidv.qlhdkh.model.PartyModel;
-import com.bidv.qlhdkh.model.ResponseFile;
 import com.bidv.qlhdkh.repository.ConfigTopicRepository;
 import com.bidv.qlhdkh.repository.DepartmentRepository;
 import com.bidv.qlhdkh.service.ConfigTopicService;
@@ -207,7 +202,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
         parameters.put("quantity", caseInfo.getQuantity());
         parameters.put("useReason", caseInfo.getCadresPhone());
         parameters.put("registerCondition", caseInfo.getRegisterCondition());
-        parameters.put("cost", String.valueOf(caseInfo.getCost()));
+        parameters.put("cost", String.format("%,.0f",caseInfo.getCost()).replace(".000000",""));
         log.info(String.valueOf(caseInfo.getCost()));
         parameters.put("startDate", caseInfo.getStartDate());
         parameters.put("endDate", caseInfo.getEndDate());
@@ -303,7 +298,17 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
         JRBeanCollectionDataSource EvaluateDutyCollectionBeanDatasource = new JRBeanCollectionDataSource(caseInfo.getLstEvaluateDuty().getEvaluateDutyModel());
         parameters.put("EvaluateDutyCollectionBean", EvaluateDutyCollectionBeanDatasource);
         //////////////////////
-        JRBeanCollectionDataSource EstimateBudgetCollectionBeanDatasource = new JRBeanCollectionDataSource(caseInfo.getLstEstimateBudget().getEstimateBudgetModel());
+        List<EstimateBudModel> estimateBudModels = new ArrayList<>();
+        for (EstimateBudgetModel model: caseInfo.getLstEstimateBudget().getEstimateBudgetModel()){
+            EstimateBudModel estimateBudModel = new EstimateBudModel();
+            estimateBudModel.setAmount(String.format("%,.0f",model.getAmount()).replace(".000000",""));
+            estimateBudModel.setRate(String.format("%,.0f",model.getRate()).replace(".000000",""));
+            estimateBudModel.setCaseId(model.getCaseId());
+            estimateBudModel.setContent(model.getContent());
+            estimateBudModel.setNote(model.getNote());
+            estimateBudModels.add(estimateBudModel);
+        }
+        JRBeanCollectionDataSource EstimateBudgetCollectionBeanDatasource = new JRBeanCollectionDataSource(estimateBudModels);
         parameters.put("EstimateBudgetCollectionBean", EstimateBudgetCollectionBeanDatasource);
 
         JRBeanCollectionDataSource DutyStatusCollectionBeanDatasource = new JRBeanCollectionDataSource(caseInfo.getLstDutyStatus().getDutyStatusModel());
@@ -336,6 +341,7 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
         responseFile.setMimeType(("application/pdf"));
         return responseFile;
     }
+
 
     private static String encodeFileToBase64Binary(File file) {
         String encodedfile = null;
