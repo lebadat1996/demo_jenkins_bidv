@@ -51,11 +51,11 @@ public class InitiativeTranScriptModel   {
   @JsonProperty("Department")
   private String department = null;
 
-  @JsonProperty("StartDate")
-  private String startDate = null;
+  @JsonProperty("ProjectName")
+  private String projectName = null;
 
   @JsonProperty("Interest")
-  private Float interest = null;
+  private String interest = null;
 
   @JsonProperty("Author")
   private String author = null;
@@ -285,27 +285,27 @@ public class InitiativeTranScriptModel   {
     this.department = department;
   }
 
-  public InitiativeTranScriptModel startDate(String startDate) {
-    this.startDate = startDate;
+  public InitiativeTranScriptModel projectName(String projectName) {
+    this.projectName = projectName;
     return this;
   }
 
   /**
-   * Get startDate
-   * @return startDate
+   * Get projectName
+   * @return projectName
    **/
   @ApiModelProperty(value = "")
 
 
-  public String getStartDate() {
-    return startDate;
+  public String getProjectName() {
+    return projectName;
   }
 
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
   }
 
-  public InitiativeTranScriptModel interest(Float interest) {
+  public InitiativeTranScriptModel interest(String interest) {
     this.interest = interest;
     return this;
   }
@@ -318,11 +318,11 @@ public class InitiativeTranScriptModel   {
 
   @Valid
 
-  public Float getInterest() {
+  public String getInterest() {
     return interest;
   }
 
-  public void setInterest(Float interest) {
+  public void setInterest(String interest) {
     this.interest = interest;
   }
 
@@ -367,14 +367,14 @@ public class InitiativeTranScriptModel   {
             Objects.equals(this.sugguest, initiativeTranScriptModel.sugguest) &&
             Objects.equals(this.addRequest, initiativeTranScriptModel.addRequest) &&
             Objects.equals(this.department, initiativeTranScriptModel.department) &&
-            Objects.equals(this.startDate, initiativeTranScriptModel.startDate) &&
+            Objects.equals(this.projectName, initiativeTranScriptModel.projectName) &&
             Objects.equals(this.interest, initiativeTranScriptModel.interest) &&
             Objects.equals(this.author, initiativeTranScriptModel.author);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, caseId, creativityScore, scienceScore, realityScore, effecScore, average, conclusion, sugguest, addRequest, department, startDate, interest, author);
+    return Objects.hash(id, caseId, creativityScore, scienceScore, realityScore, effecScore, average, conclusion, sugguest, addRequest, department, projectName, interest, author);
   }
 
   @Override
@@ -393,7 +393,7 @@ public class InitiativeTranScriptModel   {
     sb.append("    sugguest: ").append(toIndentedString(sugguest)).append("\n");
     sb.append("    addRequest: ").append(toIndentedString(addRequest)).append("\n");
     sb.append("    department: ").append(toIndentedString(department)).append("\n");
-    sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    interest: ").append(toIndentedString(interest)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("}");

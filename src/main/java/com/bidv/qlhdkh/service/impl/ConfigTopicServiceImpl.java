@@ -298,9 +298,9 @@ public class ConfigTopicServiceImpl implements ConfigTopicService {
         JRBeanCollectionDataSource EvaluateDutyCollectionBeanDatasource = new JRBeanCollectionDataSource(caseInfo.getLstEvaluateDuty().getEvaluateDutyModel());
         parameters.put("EvaluateDutyCollectionBean", EvaluateDutyCollectionBeanDatasource);
         //////////////////////
-        List<EstimateBudModel> estimateBudModels = new ArrayList<>();
+        List<com.bidv.qlhdkh.model.EstimateBudModel> estimateBudModels = new ArrayList<>();
         for (EstimateBudgetModel model: caseInfo.getLstEstimateBudget().getEstimateBudgetModel()){
-            EstimateBudModel estimateBudModel = new EstimateBudModel();
+            com.bidv.qlhdkh.model.EstimateBudModel estimateBudModel = new EstimateBudModel();
             estimateBudModel.setAmount(String.format("%,.0f",model.getAmount()).replace(".000000",""));
             estimateBudModel.setRate(String.format("%,.0f",model.getRate()).replace(".000000",""));
             estimateBudModel.setCaseId(model.getCaseId());

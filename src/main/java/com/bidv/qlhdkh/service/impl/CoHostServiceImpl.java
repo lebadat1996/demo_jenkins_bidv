@@ -383,7 +383,7 @@ public class CoHostServiceImpl implements CoHostService {
                     initiativetranscripts.setSugguest(initiativetranscript.getSugguest());
                     initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
                     initiativetranscripts.setDepartment(initiativetranscript.getDepartment());
-                    initiativetranscripts.setStartDate(Util.getDates(initiativetranscript.getStartDate()));
+                    initiativetranscripts.setProjectName(initiativetranscript.getProjectName());
                     initiativetranscripts.setInterest(initiativetranscript.getInterest());
                     initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
                     initiativetranscripts.setAuthor(initiativetranscript.getAuthor());
@@ -403,7 +403,7 @@ public class CoHostServiceImpl implements CoHostService {
                     initiativetranscripts.setSugguest(initiativetranscript.getSugguest());
                     initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
                     initiativetranscripts.setDepartment(initiativetranscript.getDepartment());
-                    initiativetranscripts.setStartDate(Util.getDates(initiativetranscript.getStartDate()));
+                    initiativetranscripts.setProjectName(initiativetranscript.getProjectName());
                     initiativetranscripts.setInterest(initiativetranscript.getInterest());
                     initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
                     initiativetranscripts.setAuthor(initiativetranscript.getAuthor());
@@ -436,7 +436,7 @@ public class CoHostServiceImpl implements CoHostService {
             initiativetranscripts.setSugguest(initiativetranscript.getSugguest());
             initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
             initiativetranscripts.setDepartment(initiativetranscript.getDepartment());
-            initiativetranscripts.setStartDate(Util.convertDateToString(initiativetranscript.getStartDate()));
+            initiativetranscripts.setProjectName(initiativetranscript.getProjectName());
             initiativetranscripts.setInterest(initiativetranscript.getInterest());
             initiativetranscripts.setAddRequest(initiativetranscript.getAddRequest());
             initiativetranscripts.setAuthor(initiativetranscript.getAuthor());

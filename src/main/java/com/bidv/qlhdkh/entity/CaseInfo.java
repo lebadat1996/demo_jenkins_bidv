@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class CaseInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Integer id;
     @Column(name = "CASETYPE")

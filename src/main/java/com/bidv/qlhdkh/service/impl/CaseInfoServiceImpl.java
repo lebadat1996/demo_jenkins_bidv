@@ -343,7 +343,9 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                     List<CaseInfoHistory> caseInfos = caseInfoHistoryRepository.searchCases(str, projectName, projectcode, startDates, endDates, departmentCode, branch, null, userId);
                     ModelMapper modelMapper = new ModelMapper();
                     for (CaseInfoHistory caseInfo1 : caseInfos) {
-                        svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
+                            if (!caseInfo1.getInterestSub().equals(Constants.CHECK_NULL)) {
+                                svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
+                            }
                     }
                 }
             }
@@ -356,7 +358,9 @@ public class CaseInfoServiceImpl implements CaseInfoService {
                     List<CaseInfoHistory> caseInfos = caseInfoHistoryRepository.searchCases(str, projectName, projectcode, startDates, endDates, departmentCode, branch, null, userId);
                     ModelMapper modelMapper = new ModelMapper();
                     for (CaseInfoHistory caseInfo1 : caseInfos) {
-                        svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
+                        if (!caseInfo1.getInterestSub().equals(Constants.CHECK_NULL)) {
+                            svCaseInfo.add(modelMapper.map(caseInfo1, CaseInfoModel.class));
+                        }
                     }
                 }
             }

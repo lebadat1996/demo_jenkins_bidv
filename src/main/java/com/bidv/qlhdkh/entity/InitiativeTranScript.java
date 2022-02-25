@@ -33,10 +33,10 @@ public class InitiativeTranScript {
     String AddRequest;
     @Column(name = "DEPARTMENT")
     String Department;
-    @Column(name = "STARTDATE")
-    Date startDate;
+    @Column(name = "PROJECTNAME")
+    String projectName;
     @Column(name = "INTEREST")
-    Float interest;
+    String interest;
     @Column(name = "AUTHOR")
     String author;
 }
